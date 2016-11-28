@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="en">
+	<head>
+		<title>three.js - 1st attempt</title>
+		<!--<meta charset="utf-8">-->
+		<meta name="viewport" content="width=device-width, user-scalable=no, minimum-scale=1.0, maximum-scale=1.0">
+		<!--<style>
+			body {
+				font-family: Monospace;
+				background-color: #f0f0f0;
+				margin: 0px;
+				overflow: hidden;
+			}
+		</style>-->
+	</head>
+        
+  <body>
+
+		<script src="build/three.js"></script>
+    <script>
+    
+
+var scene, camera, renderer;
+var geometry, material, mesh, spheregeometry, spherematerial, sphere;
+
+init();
+animate();
+
+function init() {
+
+    scene = new THREE.Scene();
+
+    camera = new THREE.PerspectiveCamera( 75, window.innerWidth / window.innerHeight, 1, 10000 );
+    camera.position.z = 500;
+    //camera.position.x = 500;
+    
+    geometry = new THREE.BoxGeometry( 200, 200, 100 );
+    material = new THREE.MeshBasicMaterial( { color: 0xffffff, wireframe: true    } );
+    //sphereTexture
+    spheregeometry = new THREE.SphereGeometry(200,50,50);
+    spheregeometry.applyMatrix( new THREE.Matrix4().makeScale( 1, -1, 1 ));
+    spherematerial = new THREE.MeshBasicMaterial({color: 0xffffff, side: THREE.FrontSide,wireframe: true });
+    spherematerial.needsUpdate = true;
+    sphere = new THREE.Mesh(spheregeometry, spherematerial);
+    sphere.name = 'sphere'; 
+
+    mesh = new THREE.Mesh( geometry, material );
+    //mesh.position.z=50;
+    scene.add( mesh,sphere );
+
+    renderer = new THREE.WebGLRenderer();
+    renderer.setSize( window.innerWidth, window.innerHeight );
+
+    document.body.appendChild( renderer.domElement );
+    renderer.render( scene, camera );
+}
+
+function animate() {
+
+    requestAnimationFrame( animate );
+
+    sphere.rotation.x += 0.01;
+    sphere.rotation.y += 0.02;
+
+    renderer.render( scene, camera );
+
+}
+
+  </script>
+</body>
+</html>
